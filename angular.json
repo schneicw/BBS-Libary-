@@ -159,6 +159,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "bug-lib"
+    }
+  },
+  "defaultProject": "bug-lib",
+  "cli": {
+    "analytics": "9c511780-4b09-4713-a8a9-2ffdaa5adab0"
+  }
 }
