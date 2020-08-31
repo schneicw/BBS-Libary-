@@ -6,5 +6,18 @@
 */
 {
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./projects/bug-lib/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bug-lib/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bug-lib-test/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/bug-lib-test/tsconfig.spec.json"
+    }
+]
 }
