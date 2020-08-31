@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'lib-bug-lib',
   template: `
-    <button> Click to add <button>
-    <p>
-      bug-lib works!
-    </p>
+  <span><img class="logo" src="http://bug-bounty-system.s3-website.us-east-2.amazonaws.com/Ladybug-128.png"> </span>
+    <h3>
+      Add bug from site 
+    </h3>
+    <button mat-raised-button color="primary">Primary</button>
   `,
   styles: [
   ]
