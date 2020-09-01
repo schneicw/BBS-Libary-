@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BugLibComponent } from './bug-lib.component';
 import { CommonModule } from '@angular/common';  
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -10,7 +12,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   exports: [BugLibComponent]
 })

@@ -28,5 +28,9 @@ export class BugLibService {
   submitNewBugReport(bugReport: BugReport): Promise<BugReport>{
     return this.http.post<BugReport>(`${this.path}/bugreports`, bugReport).toPromise();
   }
+
+  async getBugReports(): Promise<BugReport[]> {
+    return await this.http.get<BugReport[]>(`${this.path}/bugreports`).toPromise();
+  }
   
 }

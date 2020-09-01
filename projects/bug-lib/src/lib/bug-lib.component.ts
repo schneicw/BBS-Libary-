@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import BugStatus from './models/BugStatus';
 import { Application } from './models/Application';
 import { BugReport } from './models/BugReport';
+import {BugLibService} from './bug-lib.service';
 
 @Component({
   selector: 'lib-bug-lib',
@@ -114,9 +115,11 @@ export class BugLibComponent implements OnInit {
     failToPost:boolean = false;
     reportModal:boolean;
       
-    constructor(private fb: FormBuilder) { }
+    constructor(private fb: FormBuilder,  private apiService: BugLibService) { }
     
     async submitReport(){
+       console.log( await this.apiService.getBugReports());
+
         const report = new BugReport();
         report.title = this.bugForm.value.title;
         report.location = this.bugForm.value.suspectedLocation;
@@ -132,7 +135,7 @@ export class BugLibComponent implements OnInit {
         }
         report.createdTime = new Date().getTime();
     
-        // const result = await this.api.submitNewBugReport(report);
+        // const result = await this.apiService.submitNewBugReport(report);
     
     }
 
