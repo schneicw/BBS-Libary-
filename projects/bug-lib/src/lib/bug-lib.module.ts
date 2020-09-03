@@ -3,6 +3,7 @@ import { BugLibComponent } from './bug-lib.component';
 import { CommonModule } from '@angular/common';  
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { EditorModule} from '@tinymce/tinymce-angular';
 
 
 
@@ -13,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    EditorModule
   ],
   exports: [BugLibComponent]
 })
