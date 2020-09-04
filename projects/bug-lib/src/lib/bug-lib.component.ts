@@ -5,6 +5,7 @@ import BugStatus from './models/BugStatus';
 import { Application } from './models/Application';
 import { BugReport } from './models/BugReport';
 import {BugLibService} from './bug-lib.service';
+import { throws } from 'assert';
 
 
 @Component({
@@ -17,6 +18,55 @@ import {BugLibService} from './bug-lib.service';
       <div class="modal-header">
           <span (click)="closeBugReportModal()" class="close">&times;</span>
       </div>
+
+
+      <div class="modal-container">
+      <div class="modal-body">
+      <div class="container">
+      <h1>Add Application to Bug Bounty</h1>
+      <div class="col">
+          <form [formGroup]="bugForm">
+        
+          <div class="form-group-b">
+            <label class="formLabel" >Application Name:</label>
+                <div class="form-group">
+                  <input class = "inputType" type="text" formControlName="appnew">
+                </div>
+            <label class="formLabel" >Application Github:</label>
+                <div class="form-group">
+                  <input class = "inputType" type="text" formControlName="appnewgit">
+                </div>
+          </div>
+          <br>
+          <div class="modal-action-buttons">
+          <button class="modal-cancel-btn">
+              <div class="modal-btn-label-wrapper">
+                  <div class="modal-btn-label">
+                      Cancel
+                  </div>
+              </div>
+          </button>
+          <button type="submit" class="modal-submit-btn" (click)="addApplication()" id="AppSubmit">
+              <div class="modal-btn-label-wrapper">
+                  <div class="modal-btn-label">
+                      Publish
+                  </div>
+              </div>
+          </button>
+          </div>
+          </form> 
+          <p *ngIf="failToPost" class="warningPost">The App failed to post. Please review the request</p>
+          
+      </div>
+  </div>
+      </div>
+    </div>
+
+
+
+
+
+
       <div class="modal-container">
         <div class="modal-body">
         <div class="container">
@@ -33,6 +83,7 @@ import {BugLibService} from './bug-lib.service';
               </select>
             </div>
 
+  
             <label class="formLabel">Title:</label>
             <div class="form-group">
                 <input class = "inputType" type="text" formControlName="title" required> 
@@ -80,7 +131,7 @@ import {BugLibService} from './bug-lib.service';
                     </div>
                 </div>
             </button>
-            <button class="modal-submit-btn">
+            <button type="submit" class="modal-submit-btn" (click)="submitReport()"  id="BugSubmit">
                 <div class="modal-btn-label-wrapper">
                     <div class="modal-btn-label">
                         Publish
@@ -297,7 +348,11 @@ export class BugLibComponent implements OnInit {
         priority: [''],
         reporter: [{value: '', disabled: true}],
         description: ['', Validators.required],
-        reproduceSteps: ['']
+        reproduceSteps: [''],
+        appnew: [''],
+        appnewgit: [''],
+        
+        
     });
     
       // client:Client;
@@ -310,9 +365,25 @@ export class BugLibComponent implements OnInit {
       
     constructor(private fb: FormBuilder,  private apiService: BugLibService) { }
     
-    async submitReport(){
-       console.log( await this.apiService.getBugReports());
+    async getApplication(){
+      this.applicationList = await this.apiService.getApplications();
+      for (const app of this.applicationList){
+        this.applicationNameList.push(app.title);
+        // console.log(app);
+      }
+    }
 
+    async addApplication(){
+      console.log('adding');
+      let title = this.bugForm.value.appnew;
+      let github = this.bugForm.value.appnewgit;
+      await this.apiService.postApplication(title, github);
+      this.bugForm.value.appnew = '';
+      this.bugForm.value.appnewgit = '';
+      this.closeBugReportModal();
+    }
+
+    async submitReport(){
         const report = new BugReport();
         report.title = this.bugForm.value.title;
         report.location = this.bugForm.value.suspectedLocation;
@@ -328,18 +399,22 @@ export class BugLibComponent implements OnInit {
         }
         report.createdTime = new Date().getTime();
     
-        // const result = await this.apiService.submitNewBugReport(report);
-    
+        const result = await this.apiService.submitNewBugReport(report);
+        this.closeBugReportModal();
     }
 
     ngOnInit(): void {
+      console.log('ss');
     }
 
-    openBugReportModal(){
+    async openBugReportModal(){
+        console.log( await this.apiService.getBugReports());
+        this.getApplication();
         this.reportModal = true;
     }
 
     closeBugReportModal(){
         this.reportModal = false;
+        this.applicationNameList = [];
     }
 }

@@ -20,6 +20,11 @@ export class BugLibService {
 
   path: string = 'http://localhost:9111';
 
+
+  getApplications(): Promise<Application[]>{
+    return this.http.get<Application[]>(`${this.path}/applications`).toPromise();
+  }
+
   postApplication(appTitle:string,appLink:string):Promise<Application>{
     let appJson = {"id":0, "title":`${appTitle}`, "gitLink":`${appLink}`}
     return this.http.post<Application>(`${this.path}/applications/`, appJson).toPromise();
