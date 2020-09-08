@@ -4,15 +4,19 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng build bug-lib` to build the library if changes are made.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. This will run the test project which has the library in use.
 
-## Code scaffolding
+## Publish and Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Navigate to dist folder.
+Run `npm publish`.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+To use:
+npm install BugBountySystem-lib
+in app.module.ts add `import {BugLibModule}   from 'bug-lib' `.
+in app.module.ts add ` BugLibModule ` to imports.
+in html files add `<lib-bug-lib> </lib-bug-lib>` to add lirary to project.
 
 ## Running unit tests
 
